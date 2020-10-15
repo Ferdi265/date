@@ -6,6 +6,7 @@
 #ifdef ESP32
 #define NEED_POLYFILL_TO_STRING
 #define NEED_POLYFILL_TO_WSTRING
+#define NEED_POLYFILL_STOLD
 #endif
 
 #ifdef NEED_POLYFILL_TO_STRING
@@ -36,6 +37,15 @@ std::wstring to_wstring(long long unsigned value);
 std::wstring to_wstring(float value);
 std::wstring to_wstring(double value);
 std::wstring to_wstring(long double value);
+
+}
+#endif
+
+#ifdef NEED_POLYFILL_STOLD
+namespace std {
+
+long double stold(const std::string& str, std::size_t* pos = nullptr);
+long double stold(const std::wstring& str, std::size_t* pos = nullptr);
 
 }
 #endif

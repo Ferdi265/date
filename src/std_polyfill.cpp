@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdio>
 #include <cwchar>
+#include <cstdlib>
 #include <cassert>
 
 #ifdef NEED_POLYFILL_TO_STRING
@@ -115,4 +116,34 @@ std::wstring to_wstring(long double value) {
 }
 
 }
+#endif
+
+#ifdef NEED_POLYFILL_STOLD
+
+long double stold(const std::string& str, std::size_t* pos) {
+    const char * startptr = str.c_str();
+    char * endptr = nullptr;
+
+    long double value = strtold(startptr, &endptr);
+
+    if (pos != nullptr) {
+        *pos = endptr - startptr;
+    }
+
+    return value;
+}
+
+long double stold(const std::wstring& str, std::size_t* pos) {
+    const wchar_t * startptr = str.c_str();
+    wchar_t * endptr = nullptr;
+
+    long double value = wcstold(startptr, &endptr);
+
+    if (pos != nullptr) {
+        *pos = endptr - startptr;
+    }
+
+    return value;
+}
+
 #endif
