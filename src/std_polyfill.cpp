@@ -2,6 +2,7 @@
 
 #include <string>
 #include <cstdio>
+#include <cwchar>
 #include <cassert>
 
 #ifdef NEED_POLYFILL_TO_STRING
@@ -13,7 +14,7 @@ std::string to_sprintf(const char* format, T t) {
     assert(length >= 0 && "snprintf failed unexpectedly");
 
     s.resize(length);
-    int written = snprintf(&s.front(), length + 1, format, t);
+    int written = snprintf(&s.front(), length, format, t);
     assert(written == length && "snprintf failed unexpectedly");
 
     return s;
@@ -55,6 +56,62 @@ std::string to_string(double value) {
 
 std::string to_string(long double value) {
     return to_sprintf("%Lf", value);
+}
+
+}
+#endif
+
+#ifdef NEED_POLYFILL_TO_WSTRING
+template <typename T>
+std::wstring to_swprintf(const wchar_t* format, T t) {
+    std::wstring s;
+
+    int length = swprintf(nullptr, 0, format, t);
+    assert(length >= 0 && "swprintf failed unexpectedly");
+
+    s.resize(length);
+    int written = swprintf(&s.front(), length, format, t);
+    assert(written == length && "swprintf failed unexpectedly");
+
+    return s;
+}
+
+namespace std {
+
+std::wstring to_wstring(int value) {
+    return to_swprintf(L"%d", value);
+}
+
+std::wstring to_wstring(long value) {
+    return to_swprintf(L"%ld", value);
+}
+
+std::wstring to_wstring(long long value) {
+    return to_swprintf(L"%lld", value);
+}
+
+std::wstring to_wstring(unsigned value) {
+    return to_swprintf(L"%u", value);
+}
+
+std::wstring to_wstring(unsigned long value) {
+    return to_swprintf(L"%lu", value);
+}
+
+std::wstring to_wstring(unsigned long long value) {
+    return to_swprintf(L"%llu", value);
+}
+
+std::wstring to_wstring(float value) {
+    return to_swprintf(L"%f", value);
+}
+
+std::wstring to_wstring(double value) {
+    return to_swprintf(L"%f", value);
+}
+
+std::wstring to_wstring(long double value) {
+    return to_swprintf(L"%Lf", value);
 }
 
 }
