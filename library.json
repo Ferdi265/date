@@ -1,0 +1,20 @@
+{
+    "name": "date",
+    "version": "2.1.0",
+    "build": {
+        "includeDir": "include",
+        "srcFilter":
+        [
+            "+<*>",
+            "-<.git>",
+            "-<detect/>",
+            "-<test/*>"
+        ],
+        "flags": [
+            "-DINSTALL=",
+            "-DHAS_REMOTE_API=0",
+            "-DAUTO_DOWNLOAD=0",
+            "-DUSE_OS_TZDB=0"
+        ]
+    }
+}
