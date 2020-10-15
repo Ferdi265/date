@@ -40,6 +40,7 @@
 #  endif
 #endif  // HAS_STRING_VIEW
 
+#include "std_polyfill.h"
 #include <cassert>
 #include <algorithm>
 #include <cctype>
