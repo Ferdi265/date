@@ -119,6 +119,7 @@ std::wstring to_wstring(long double value) {
 #endif
 
 #ifdef NEED_POLYFILL_STOLD
+namespace std {
 
 long double stold(const std::string& str, std::size_t* pos) {
     const char * startptr = str.c_str();
@@ -146,4 +147,5 @@ long double stold(const std::wstring& str, std::size_t* pos) {
     return value;
 }
 
+}
 #endif
