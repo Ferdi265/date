@@ -14,10 +14,11 @@ std::string to_sprintf(const char* format, T t) {
     int length = snprintf(nullptr, 0, format, t);
     assert(length >= 0 && "snprintf failed unexpectedly");
 
-    s.resize(length);
-    int written = snprintf(&s.front(), length, format, t);
+    s.resize(length + 1);
+    int written = snprintf(&s.front(), length + 1, format, t);
     assert(written == length && "snprintf failed unexpectedly");
 
+    s.resize(length);
     return s;
 }
 
@@ -70,10 +71,11 @@ std::wstring to_swprintf(const wchar_t* format, T t) {
     int length = swprintf(nullptr, 0, format, t);
     assert(length >= 0 && "swprintf failed unexpectedly");
 
-    s.resize(length);
-    int written = swprintf(&s.front(), length, format, t);
+    s.resize(length + 1);
+    int written = swprintf(&s.front(), length + 1, format, t);
     assert(written == length && "swprintf failed unexpectedly");
 
+    s.resize(length);
     return s;
 }
 
